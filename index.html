@@ -335,8 +335,17 @@
         contentHtml += `<blockquote class="border-l-4 border-red-600 pl-6 italic text-3xl my-10 font-serif">"${b.value}"</blockquote>`;
     } 
     else if (b.type === 'html') {
-        contentHtml += `<div class="my-8">${b.value}</div>`;
-    } 
+    const iframeId = `iframe-${Math.random().toString(36).substr(2, 9)}`;
+    contentHtml += `
+        <div class="my-8 w-full">
+            <iframe id="${iframeId}" 
+                srcdoc="${b.value.replace(/"/g, '&quot;')}" 
+                style="width: 100%; border: none; overflow: hidden;"
+                onload="this.style.height = this.contentWindow.document.body.scrollHeight + 'px'"
+                sandbox="allow-scripts allow-popups allow-forms allow-same-origin">
+            </iframe>
+        </div>`;
+} 
     else if (b.type === 'image') {
     contentHtml += `
         <div class="mb-8">
