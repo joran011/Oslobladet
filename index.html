@@ -163,9 +163,12 @@
                 <input type="text" id="t-in" placeholder="Tittel" class="w-full text-2xl font-bold border-b p-2 outline-none">
                 <textarea id="l-in" placeholder="Ingress..." class="w-full border-b p-2 outline-none h-20"></textarea>
                 <div id="content-builder" class="space-y-4 max-h-64 overflow-y-auto p-4 bg-gray-50 rounded-2xl border"></div>
-                <div class="flex gap-2">
-                    <button onclick="addBlock('text')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase">+ Tekst</button>
-                    <button onclick="addBlock('image')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase">+ Bilde</button>
+                    <div class="flex gap-2">
+    <button onclick="addBlock('text')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase">+ Tekst</button>
+    <button onclick="addBlock('image')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase">+ Bilde</button>
+    <button onclick="addBlock('quote')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase text-purple-600">+ Sitat</button>
+    <button onclick="addBlock('html')" class="flex-1 bg-white border py-3 rounded-xl font-bold text-[10px] uppercase text-red-600">+ HTML/Video</button>
+</div>
                 </div>
                 <div class="flex gap-4 pt-6">
                     <button onclick="publish()" id="publish-btn" class="flex-[2] bg-red-600 text-white font-black py-5 rounded-2xl uppercase">Lagre og publiser</button>
@@ -312,10 +315,15 @@
             art.blocks.forEach(b => {
     if (b.type === 'text') {
         contentHtml += `<div class="mb-12 space-y-6">${b.value.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}</div>`;
-    } else if (b.type === 'html') {
-        // Her dytter vi rå-HTML rett inn i artikkelen
+    } 
+    // LEGG TIL DETTE FOR SITAT:
+    else if (b.type === 'quote') {
+        contentHtml += `<blockquote class="border-l-4 border-red-600 pl-6 italic text-3xl my-10 font-serif">"${b.value}"</blockquote>`;
+    } 
+    else if (b.type === 'html') {
         contentHtml += `<div class="my-8">${b.value}</div>`;
-    } else if (b.type === 'image') {
+    } 
+    else if (b.type === 'image') {
         contentHtml += `<img src="${b.value}" class="w-full rounded-2xl border-2 border-black mb-2 shadow-sm">`;
         imgCount++;
         if(imgCount === 1) contentHtml += authorHtml;
