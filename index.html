@@ -37,6 +37,20 @@
             letter-spacing: 1px;
         }
 
+        /* Stil for bildetekst under bilder */
+.photo-caption { 
+    font-size: 12px; 
+    font-weight: 700; 
+    color: #64748b; 
+    margin-top: 8px; 
+    margin-bottom: 24px; 
+}
+.photo-caption span { color: #1a1a1a; }
+
+/* Tilpasning for mørkeblå artikler */
+.bg-fjellstad-blue .photo-caption { color: rgba(255,255,255,0.5); }
+.bg-fjellstad-blue .photo-caption span { color: white; }
+
         .tag-pill { background-color: #f3f4f6; color: #1f2937; padding: 6px 14px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
 
         .footer-dark { background-color: #001529; color: white; padding: 80px 0 40px 0; margin-top: 100px; }
@@ -324,10 +338,14 @@
         contentHtml += `<div class="my-8">${b.value}</div>`;
     } 
     else if (b.type === 'image') {
-        contentHtml += `<img src="${b.value}" class="w-full rounded-2xl border-2 border-black mb-2 shadow-sm">`;
-        imgCount++;
-        if(imgCount === 1) contentHtml += authorHtml;
-    }
+    contentHtml += `
+        <div class="mb-8">
+            <img src="${b.value}" class="w-full rounded-2xl border-2 border-black shadow-sm">
+            ${b.caption ? `<p class="photo-caption">Foto: <span>${b.caption}</span></p>` : ''}
+        </div>`;
+    imgCount++;
+    if(imgCount === 1) contentHtml += authorHtml;
+}
 });
             if(imgCount === 0) contentHtml = authorHtml + contentHtml;
             document.getElementById('article-content-area').innerHTML = contentHtml;
@@ -341,19 +359,33 @@
         }
 
         function addBlock(type) { 
-    contentBlocks.push({ type, value: type === 'html' ? '' : '' }); 
+    if (type === 'image') {
+        contentBlocks.push({ type: 'image', value: '', caption: '' }); 
+    } else {
+        contentBlocks.push({ type, value: '' }); 
+    }
     renderBuilder(); 
 }
         
         function renderBuilder() {
-            document.getElementById('content-builder').innerHTML = contentBlocks.map((b, i) => `
-                <div class="p-4 bg-white rounded-xl border mb-3 relative text-black text-left">
-                    <button onclick="contentBlocks.splice(${i}, 1); renderBuilder()" class="absolute top-2 right-2 text-red-500 font-bold text-[9px]">FJERN</button>
-                    <p class="text-[8px] uppercase font-bold opacity-30 mb-2">${b.type}</p>
-                    <textarea oninput="contentBlocks[${i}].value=this.value" class="w-full outline-none text-sm bg-transparent h-20">${b.value}</textarea>
-                </div>
-            `).join('');
-        }
+    document.getElementById('content-builder').innerHTML = contentBlocks.map((b, i) => `
+        <div class="p-4 bg-white rounded-xl border mb-3 relative text-black text-left">
+            <button onclick="contentBlocks.splice(${i}, 1); renderBuilder()" class="absolute top-2 right-2 text-red-500 font-bold text-[9px]">FJERN</button>
+            <p class="text-[8px] uppercase font-bold opacity-30 mb-2">${b.type}</p>
+            
+            <textarea oninput="contentBlocks[${i}].value=this.value" 
+                placeholder="${b.type === 'image' ? 'Bilde-URL' : 'Innhold...'}"
+                class="w-full outline-none text-sm bg-transparent h-16 border-b mb-2">${b.value}</textarea>
+            
+            ${b.type === 'image' ? `
+                <input type="text" placeholder="Fotograf (f.eks. Jøran Hellestø)" 
+                    oninput="contentBlocks[${i}].caption=this.value" 
+                    value="${b.caption || ''}"
+                    class="w-full outline-none text-[10px] font-bold bg-gray-50 p-2 rounded border">
+            ` : ''}
+        </div>
+    `).join('');
+}
 
         async function publish() {
             const btn = document.getElementById('publish-btn');
