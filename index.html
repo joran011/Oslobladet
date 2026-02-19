@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fjellstadbladet</title>
+    <title>Oslobladet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -58,7 +58,7 @@
     </header>
     
     <div id="header-visuals" class="text-center py-16">
-        <h1 class="newspaper-title italic underline decoration-2 underline-offset-8 cursor-pointer" onclick="location.reload()">Fjellstadbladet</h1>
+        <h1 class="newspaper-title italic underline decoration-2 underline-offset-8 cursor-pointer" onclick="location.reload()">Oslobladet</h1>
         <div class="inline-block bg-black text-[#d4af37] px-8 py-2 mt-8 text-[10px] font-black tracking-[0.5em] uppercase rounded-full">❧ ETAB 2026 ❧</div>
     </div>
 
@@ -100,7 +100,7 @@
                 <ul>
                     <li class="cursor-pointer underline" onclick="openTips()">Send inn tips</li>
                     <li>Tipstelefon: </li>
-                    <li>tips@fjellstadbladet.no</li>
+                    <li>tips@Oslobladet.no</li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="max-w-[1200px] mx-auto mt-20 px-4 pt-10 border-t border-white/10 opacity-50 text-[10px] uppercase tracking-widest text-center">
-            <p>© Fjellstadbladet – Alle rettigheter reservert.</p>
+            <p>© Oslobladet – Alle rettigheter reservert.</p>
         </div>
     </footer>
 
@@ -400,7 +400,7 @@
             const discordPayload = {
                 content: "🚨 **NYTT TIPS MOTTATT!**",
                 embeds: [{
-                    title: "Tips fra Fjellstadbladet",
+                    title: "Tips fra Oslobladet",
                     color: 15548997,
                     fields: [
                         { name: "Fra/Kontakt", value: contact || "Anonym" },
