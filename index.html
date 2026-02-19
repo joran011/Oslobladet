@@ -310,14 +310,17 @@
             let contentHtml = "";
             let imgCount = 0;
             art.blocks.forEach(b => {
-                if (b.type === 'text') {
-                    contentHtml += `<div class="mb-12 space-y-6">${b.value.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}</div>`;
-                } else {
-                    contentHtml += `<img src="${b.value}" class="w-full rounded-2xl border-2 border-black mb-2 shadow-sm">`;
-                    imgCount++;
-                    if(imgCount === 1) contentHtml += authorHtml;
-                }
-            });
+    if (b.type === 'text') {
+        contentHtml += `<div class="mb-12 space-y-6">${b.value.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}</div>`;
+    } else if (b.type === 'html') {
+        // Her dytter vi rå-HTML rett inn i artikkelen
+        contentHtml += `<div class="my-8">${b.value}</div>`;
+    } else if (b.type === 'image') {
+        contentHtml += `<img src="${b.value}" class="w-full rounded-2xl border-2 border-black mb-2 shadow-sm">`;
+        imgCount++;
+        if(imgCount === 1) contentHtml += authorHtml;
+    }
+});
             if(imgCount === 0) contentHtml = authorHtml + contentHtml;
             document.getElementById('article-content-area').innerHTML = contentHtml;
 
@@ -329,7 +332,10 @@
             window.scrollTo(0,0);
         }
 
-        function addBlock(type) { contentBlocks.push({ type, value: '' }); renderBuilder(); }
+        function addBlock(type) { 
+    contentBlocks.push({ type, value: type === 'html' ? '' : '' }); 
+    renderBuilder(); 
+}
         
         function renderBuilder() {
             document.getElementById('content-builder').innerHTML = contentBlocks.map((b, i) => `
