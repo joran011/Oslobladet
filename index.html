@@ -350,7 +350,7 @@
     contentHtml += `
         <div class="mb-8">
             <img src="${b.value}" class="w-full rounded-2xl border-2 border-black shadow-sm">
-            ${b.caption ? `<p class="photo-caption">Foto: <span>${b.caption}</span></p>` : ''}
+            ${b.caption ? `<p class="photo-caption"><span>${b.caption}</span></p>` : ''}
         </div>`;
     imgCount++;
     if(imgCount === 1) contentHtml += authorHtml;
