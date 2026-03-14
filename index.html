@@ -58,6 +58,38 @@
         .footer-section h3 { font-weight: 900; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 20px; opacity: 0.9; }
         .footer-section ul { list-style: none; padding: 0; }
         .footer-section ul li { margin-bottom: 10px; font-size: 0.9rem; opacity: 0.7; }
+
+        /* DARK MODE */
+.dark body {
+    background-color: #0f172a;
+    color: white;
+}
+
+.dark header {
+    background-color: rgba(15,23,42,0.9);
+    border-color: rgba(255,255,255,0.1);
+}
+
+.dark .article-card {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: white;
+}
+
+.dark .tag-pill {
+    background-color: #334155;
+    color: white;
+}
+
+.dark footer {
+    background-color: #020617;
+}
+
+.dark #post-modal .bg-white,
+.dark #tips-modal .bg-white {
+    background-color: #1e293b;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -65,6 +97,12 @@
     <header class="border-b border-gray-100 sticky top-0 bg-white/90 backdrop-blur-md z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <button onclick="openTips()" class="bg-black text-white px-6 py-2 rounded-full font-black uppercase text-[10px] tracking-widest shadow-lg">Tips oss</button>
+
+            <button onclick="toggleDarkMode()" 
+            class="text-xs font-black uppercase tracking-widest mr-4">
+            🌙 Mørk
+            </button>
+            
             <div id="auth-section">
                 <button onclick="loginWithDiscord()" class="text-xs font-black uppercase tracking-widest">Logg inn</button>
             </div>
@@ -476,6 +514,22 @@
             } catch (err) { alert("Kunne ikke sende tips."); } 
             finally { btn.innerText = "Send tips"; btn.disabled = false; }
         }
+
+        // DARK MODE
+function toggleDarkMode() {
+    document.documentElement.classList.toggle("dark");
+
+    if (document.documentElement.classList.contains("dark")) {
+        localStorage.setItem("darkmode", "on");
+    } else {
+        localStorage.removeItem("darkmode");
+    }
+}
+
+// last saved mode
+if (localStorage.getItem("darkmode") === "on") {
+    document.documentElement.classList.add("dark");
+}
     </script>
 </body>
 </html>
