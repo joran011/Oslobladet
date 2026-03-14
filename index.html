@@ -98,6 +98,14 @@
     border-color: rgba(255,255,255,0.1);
 }
 
+        .dark #article-view img{
+    border-color:#334155;
+}
+
+        .dark #view-lead{
+    opacity:0.85;
+}
+
 .dark .article-card {
     background-color: #1e293b;
     border-color: #334155;
@@ -372,7 +380,11 @@ id="dark-toggle">
         function openArticle(id) {
             const art = articles.find(a => a.id === id);
             const view = document.getElementById('article-view');
-            view.className = `min-h-screen pb-20 ${art.bg_color === 'blue' ? 'bg-fjellstad-blue text-white' : 'bg-white text-black'}`;
+            view.className = `min-h-screen pb-20 ${
+    art.bg_color === 'blue'
+        ? 'bg-fjellstad-blue text-white'
+        : 'bg-white text-black dark:bg-slate-900 dark:text-slate-100'
+}`;
             
             document.getElementById('main-view').classList.add('hidden');
             document.getElementById('header-visuals').classList.add('hidden');
