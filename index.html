@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="no" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;600;700;900&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1a1a1a; }
+        body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #ffffff; 
+    color: #1a1a1a; 
+}
+
+.dark body{
+    background-color:#020617;
+    color:#e2e8f0;
+}
         .serif { font-family: 'Playfair Display', serif; }
         .newspaper-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -2px; }
         
@@ -65,6 +74,25 @@
     color: white;
 }
 
+        .dark .article-card{
+    background:#0f172a;
+    border-color:#1e293b;
+}
+
+.dark header{
+    background:rgba(2,6,23,0.9);
+    border-color:#1e293b;
+}
+
+.dark .tag-pill{
+    background:#1e293b;
+    color:#e2e8f0;
+}
+
+.dark .footer-dark{
+    background:#020617;
+}
+
 .dark header {
     background-color: rgba(15,23,42,0.9);
     border-color: rgba(255,255,255,0.1);
@@ -99,9 +127,10 @@
             <button onclick="openTips()" class="bg-black text-white px-6 py-2 rounded-full font-black uppercase text-[10px] tracking-widest shadow-lg">Tips oss</button>
 
             <button onclick="toggleDarkMode()" 
-            class="text-xs font-black uppercase tracking-widest mr-4">
-            🌙 Mørk
-            </button>
+class="text-xl mr-4" 
+id="dark-toggle">
+🌙
+</button>
             
             <div id="auth-section">
                 <button onclick="loginWithDiscord()" class="text-xs font-black uppercase tracking-widest">Logg inn</button>
@@ -515,21 +544,31 @@
             finally { btn.innerText = "Send tips"; btn.disabled = false; }
         }
 
-        // DARK MODE
-function toggleDarkMode() {
-    document.documentElement.classList.toggle("dark");
+        function toggleDarkMode() {
+    const html = document.documentElement;
+    const btn = document.getElementById("dark-toggle");
 
-    if (document.documentElement.classList.contains("dark")) {
-        localStorage.setItem("darkmode", "on");
+    html.classList.toggle("dark");
+
+    if (html.classList.contains("dark")) {
+        localStorage.setItem("darkmode","on");
+        btn.innerHTML = "☀️";
     } else {
         localStorage.removeItem("darkmode");
+        btn.innerHTML = "🌙";
     }
 }
 
-// last saved mode
-if (localStorage.getItem("darkmode") === "on") {
-    document.documentElement.classList.add("dark");
+function loadDarkMode(){
+    const btn = document.getElementById("dark-toggle");
+
+    if(localStorage.getItem("darkmode") === "on"){
+        document.documentElement.classList.add("dark");
+        if(btn) btn.innerHTML="☀️";
+    }
 }
+
+loadDarkMode();
     </script>
 </body>
 </html>
