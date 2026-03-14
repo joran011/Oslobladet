@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no" class="">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;600;700;900&display=swap');
         
-        body { 
-    font-family: 'Inter', sans-serif; 
-    background-color: #ffffff; 
-    color: #1a1a1a; 
-}
-
-.dark body{
-    background-color:#020617;
-    color:#e2e8f0;
-}
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1a1a1a; }
         .serif { font-family: 'Playfair Display', serif; }
         .newspaper-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -2px; }
         
@@ -67,65 +58,6 @@
         .footer-section h3 { font-weight: 900; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 20px; opacity: 0.9; }
         .footer-section ul { list-style: none; padding: 0; }
         .footer-section ul li { margin-bottom: 10px; font-size: 0.9rem; opacity: 0.7; }
-
-        /* DARK MODE */
-.dark body {
-    background-color: #0f172a;
-    color: white;
-}
-
-        .dark .article-card{
-    background:#0f172a;
-    border-color:#1e293b;
-}
-
-.dark header{
-    background:rgba(2,6,23,0.9);
-    border-color:#1e293b;
-}
-
-.dark .tag-pill{
-    background:#1e293b;
-    color:#e2e8f0;
-}
-
-.dark .footer-dark{
-    background:#020617;
-}
-
-.dark header {
-    background-color: rgba(15,23,42,0.9);
-    border-color: rgba(255,255,255,0.1);
-}
-
-        .dark #article-view img{
-    border-color:#334155;
-}
-
-        .dark #view-lead{
-    opacity:0.85;
-}
-
-.dark .article-card {
-    background-color: #1e293b;
-    border-color: #334155;
-    color: white;
-}
-
-.dark .tag-pill {
-    background-color: #334155;
-    color: white;
-}
-
-.dark footer {
-    background-color: #020617;
-}
-
-.dark #post-modal .bg-white,
-.dark #tips-modal .bg-white {
-    background-color: #1e293b;
-    color: white;
-}
     </style>
 </head>
 <body>
@@ -133,13 +65,6 @@
     <header class="border-b border-gray-100 sticky top-0 bg-white/90 backdrop-blur-md z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <button onclick="openTips()" class="bg-black text-white px-6 py-2 rounded-full font-black uppercase text-[10px] tracking-widest shadow-lg">Tips oss</button>
-
-            <button onclick="toggleDarkMode()" 
-class="text-xl mr-4" 
-id="dark-toggle">
-🌙
-</button>
-            
             <div id="auth-section">
                 <button onclick="loginWithDiscord()" class="text-xs font-black uppercase tracking-widest">Logg inn</button>
             </div>
@@ -380,11 +305,7 @@ id="dark-toggle">
         function openArticle(id) {
             const art = articles.find(a => a.id === id);
             const view = document.getElementById('article-view');
-            view.className = `min-h-screen pb-20 ${
-    art.bg_color === 'blue'
-        ? 'bg-fjellstad-blue text-white'
-        : 'bg-white text-black dark:bg-slate-900 dark:text-slate-100'
-}`;
+            view.className = `min-h-screen pb-20 ${art.bg_color === 'blue' ? 'bg-fjellstad-blue text-white' : 'bg-white text-black'}`;
             
             document.getElementById('main-view').classList.add('hidden');
             document.getElementById('header-visuals').classList.add('hidden');
@@ -555,32 +476,6 @@ id="dark-toggle">
             } catch (err) { alert("Kunne ikke sende tips."); } 
             finally { btn.innerText = "Send tips"; btn.disabled = false; }
         }
-
-        function toggleDarkMode() {
-    const html = document.documentElement;
-    const btn = document.getElementById("dark-toggle");
-
-    html.classList.toggle("dark");
-
-    if (html.classList.contains("dark")) {
-        localStorage.setItem("darkmode","on");
-        btn.innerHTML = "☀️";
-    } else {
-        localStorage.removeItem("darkmode");
-        btn.innerHTML = "🌙";
-    }
-}
-
-function loadDarkMode(){
-    const btn = document.getElementById("dark-toggle");
-
-    if(localStorage.getItem("darkmode") === "on"){
-        document.documentElement.classList.add("dark");
-        if(btn) btn.innerHTML="☀️";
-    }
-}
-
-loadDarkMode();
     </script>
 </body>
 </html>
